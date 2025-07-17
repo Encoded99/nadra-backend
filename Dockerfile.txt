@@ -1,0 +1,23 @@
+# Use the official Node.js image as the base image
+FROM node:16
+
+# Set the working directory inside the container
+WORKDIR /usr/src/app
+
+# Copy package.json and package-lock.json (if they exist) for dependency installation
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the application files into the container
+COPY . .
+
+# Install nodemon globally for development (optional if you plan to use it in Docker)
+RUN npm install -g nodemon
+
+# Expose the correct port (8080, based on your index.js file)
+EXPOSE 8080
+
+# Run the app, using nodemon for development
+CMD ["nodemon", "index.js"]
